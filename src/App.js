@@ -22,8 +22,8 @@ function App() {
     };
     //데이터아이디 +1되어야함
     dataId.current += 1;
-    setData([newItem, ...data]);
     //...data, newItem순으로 진행하면 원래데이터에 가장마지막에 이어붙인 효과 가능
+    setData([newItem, ...data]);
   };
 
   return (
