@@ -1,36 +1,35 @@
+import { useRef, useState } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 
-const dummyList = [
-  {
-    id: 1,
-    author: "hjk",
-    content: "hello",
-    emotion: 5,
-    created_date: new Date().getTime(),
-  },
-  {
-    id: 2,
-    author: "김현주",
-    content: "hi",
-    emotion: 3,
-    created_date: new Date().getTime(),
-  },
-  {
-    id: 3,
-    author: "현주김",
-    content: "hello world",
-    emotion: 2,
-    created_date: new Date().getTime(),
-  },
-];
-
 function App() {
+  const [data, setData] = useState([]);
+
+  //데이터아이디 1부터
+  const dataId = useRef(0);
+
+  // author, content, emotion을 Oncreate함수가 받아서 이데이터에 업데이트 시키려고함
+  // 안에 값들을 oncreate가 파라미터로 값으로 받을예정
+  const onCreate = (author, content, emotion) => {
+    const created_date = new Date().getTime();
+    const newItem = {
+      author,
+      content,
+      emotion,
+      created_date,
+      id: dataId.current,
+    };
+    //데이터아이디 +1되어야함
+    dataId.current += 1;
+    setData([newItem, ...data]);
+    //...data, newItem순으로 진행하면 원래데이터에 가장마지막에 이어붙인 효과 가능
+  };
+
   return (
     <div>
-      <DiaryEditor />
-      <DiaryList diaryList={dummyList} />
+      <DiaryEditor onCreate={onCreate} />
+      <DiaryList diaryList={data} />
     </div>
   );
 }

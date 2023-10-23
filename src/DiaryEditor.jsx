@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ onCreate }) => {
   const authorInput = useRef();
   const contentInput = useRef();
 
@@ -21,19 +21,24 @@ const DiaryEditor = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     if (state.author.length < 1) {
-      //focus
       authorInput.current.focus();
       return;
     }
+
     if (state.content.length < 5) {
-      //focus
       contentInput.current.focus();
       return;
     }
 
-    alert("저 장 성 공");
+    onCreate(state.author, state.content, state.emotion);
+    alert("저장 성공");
+    setState({
+      author: "",
+      content: "",
+      emotion: 1,
+    });
   };
 
   return (
@@ -46,6 +51,8 @@ const DiaryEditor = () => {
           name="author"
           value={state.author}
           onChange={handleChangeState}
+          placeholder="작성자"
+          type="text"
           //onChange={(e) =>
           // setState({
           //      ...state, //원래의 값으로 미리 펼쳐버리기때문에 변하는값 하나만 아래와 같이 표현이 가능해진다.
@@ -59,9 +66,11 @@ const DiaryEditor = () => {
       <div>
         <textarea
           ref={contentInput}
-          name="content"
           value={state.content}
           onChange={handleChangeState}
+          name="content"
+          placeholder="일기"
+          type="text"
         />
       </div>
 
