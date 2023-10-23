@@ -26,10 +26,18 @@ function App() {
     setData([newItem, ...data]);
   };
 
+  const onDelete = (targetId) => {
+    console.log(`${targetId}가 삭제되었습니다.`);
+
+    //해당 id값을 제외한 나머지를 새로운 배열만듬
+    const newDiaryList = data.filter((it) => it.id !== targetId);
+    //만든 새로운 배열을 setData로 보내주면 삭제 완료
+    setData(newDiaryList);
+  };
   return (
     <div>
       <DiaryEditor onCreate={onCreate} />
-      <DiaryList diaryList={data} />
+      <DiaryList diaryList={data} onDelete={onDelete} />
     </div>
   );
 }
