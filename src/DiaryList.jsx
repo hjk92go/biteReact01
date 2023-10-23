@@ -1,6 +1,6 @@
 import DiaryItem from "./DiaryItem";
 
-const DiaryList = ({ diaryList, onDelete }) => {
+const DiaryList = ({ onEdit, diaryList, onRemove }) => {
   console.log(diaryList);
   return (
     <div className="DiaryList">
@@ -9,7 +9,7 @@ const DiaryList = ({ diaryList, onDelete }) => {
       <div>
         {diaryList.map((it) => (
           //하나의 객체에 포함된 모든 데이터를 스프레드 연산자를 통해서 다 전달한다.
-          <DiaryItem key={it.id} {...it} onDelete={onDelete} />
+          <DiaryItem key={it.id} {...it} onEdit={onEdit} onRemove={onRemove} />
         ))}
       </div>
     </div>

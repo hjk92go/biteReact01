@@ -26,7 +26,7 @@ function App() {
     setData([newItem, ...data]);
   };
 
-  const onDelete = (targetId) => {
+  const onRemove = (targetId) => {
     console.log(`${targetId}가 삭제되었습니다.`);
 
     //해당 id값을 제외한 나머지를 새로운 배열만듬
@@ -34,10 +34,22 @@ function App() {
     //만든 새로운 배열을 setData로 보내주면 삭제 완료
     setData(newDiaryList);
   };
+
+  const onEdit = (targetId, newContent) => {
+    //setData를 통해서 값을 전달할껀데 어떤값을 전달하냐 =>
+    //id가 일치하는 원소를 찾는데 찾아서 전달할꺼임
+    //원본데이터를 다 불러온다음 targetId가 일치한다면, 컨텐츠를 새로운 컨텐츠로 업데이트 시켜줄꺼고 아니라면 원래있던내용을 반환할것이다.
+    setData(
+      data.map((it) =>
+        it.id === targetId ? { ...it, content: newContent } : it
+      )
+    );
+  };
+
   return (
     <div>
       <DiaryEditor onCreate={onCreate} />
-      <DiaryList diaryList={data} onDelete={onDelete} />
+      <DiaryList onEdit={onEdit} diaryList={data} onRemove={onRemove} />
     </div>
   );
 }
