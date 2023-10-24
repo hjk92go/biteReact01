@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
+import Lifecycle from "./Lifecycle";
 
 function App() {
   const [data, setData] = useState([]);
@@ -39,15 +40,12 @@ function App() {
     //setData를 통해서 값을 전달할껀데 어떤값을 전달하냐 =>
     //id가 일치하는 원소를 찾는데 찾아서 전달할꺼임
     //원본데이터를 다 불러온다음 targetId가 일치한다면, 컨텐츠를 새로운 컨텐츠로 업데이트 시켜줄꺼고 아니라면 원래있던내용을 반환할것이다.
-    setData(
-      data.map((it) =>
-        it.id === targetId ? { ...it, content: newContent } : it
-      )
-    );
+    setData(data.map((it) => (it.id === targetId ? { ...it, content: newContent } : it)));
   };
 
   return (
     <div>
+      <Lifecycle />
       <DiaryEditor onCreate={onCreate} />
       <DiaryList onEdit={onEdit} diaryList={data} onRemove={onRemove} />
     </div>
