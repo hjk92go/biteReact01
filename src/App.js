@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
+import OptimizeTest from "./OptimizeTest";
 
 function App() {
   const [data, setData] = useState([]);
@@ -71,8 +72,6 @@ function App() {
   //리액트에서 이렇게 return을 가지고 있는 함수를 메모이제이션 해서 이런 연산을 최적화 하기위해 useMemo를 사용하게됨
   //우리가 최적화 하고 싶은 메모이제이션함수를 감싸주면된다.
   const getDiaryAnalysis = useMemo(() => {
-    console.log("일 기 분 석 시 작");
-
     //좋은 일기 => 데이터state에서 필터를 이용하여 감정점수가 3점인것을 추린다음 그것의 길이를 구하면 갯수가 나온다.
     const goodCount = data.filter((it) => it.emotion >= 3).length;
 
@@ -98,6 +97,7 @@ function App() {
 
   return (
     <div>
+      <OptimizeTest />
       <DiaryEditor onCreate={onCreate} />
       <div>전 체 일 기 : {data.length}</div>
       <div>기 분 좋 은 일 기 갯 수 : {goodCount}</div>
