@@ -1,6 +1,10 @@
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const DiaryEditor = ({ onCreate }) => {
+  useEffect(() => {
+    console.log("Diary Editor 렌더");
+  });
+
   const authorInput = useRef();
   const contentInput = useRef();
 
@@ -93,4 +97,9 @@ const DiaryEditor = ({ onCreate }) => {
   );
 };
 
-export default DiaryEditor;
+//231114 일기리스트가 아닌 일기 작성하는 폼이 일기가 삭제되었다고 렌더링 될 필요가 없으므로
+//React.memo를 써줘서 최적화를 진행해준다.
+
+//컴포넌트에 작성하기 힘든경우에, 아래와 같이 export default에 묶어주면
+//react메모로 묶인 다이어리를 에디터 밖으로 내보내겠단 뜻으로 결론적으로 똑같게 됨
+export default React.memo(DiaryEditor);

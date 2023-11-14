@@ -85,13 +85,6 @@ function App() {
     //데이터 랭쓰가 변화하지 않는이상 계산하지않고 반환함
   }, [data.length]);
 
-  /**
-   * useMemo에서 자주하는 실수
-   * 위와 같이 useMemo를 사용하게 되면 더이상 이거는 함수가 아니게 된다.
-   * 왜냐하면 useMemo라는 기능은 어떤 함수를 전달을 받아서 무엇을 리턴하냐=>callback함수가 리턴하는 값을 그냥 리턴함
-   *
-   */
-
   //getDiaryAnalysis함수를 지역함수로 만들었기때문에 다른 함수들(onEdit,onRemove,OnCreate...) 처럼 리턴전에 호출을 하도록 할 것
   const { goodCount, badCount, goodRatio } = getDiaryAnalysis;
 
