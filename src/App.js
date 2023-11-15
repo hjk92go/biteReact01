@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
@@ -38,7 +38,18 @@ function App() {
 
   // author, content, emotion을 Oncreate함수가 받아서 이데이터에 업데이트 시키려고함
   // 안에 값들을 oncreate가 파라미터로 값으로 받을예정
-  const onCreate = (author, content, emotion) => {
+
+  //231115
+  //첫번째 인자로 전달하는 콜백 함수가 다이어리 에디터가 작성 완료를 눌렀을 때 데이터를 추가하는 함수가 되고,
+  //두번째 인자로는 Depth를 전달하는데 빈배열로 전달해서 마운트 되는 시점에 한 번만 만들고 그다음 부터는 첫 번째 만들었던 함수를
+  //그대로 재사용할 수 있도록 -> onCreate홤수가 재생성 되지 않으면 최신의 데이터 스테이트의 값을 참고할수가 없게 되는 딜레마 발생
+
+  // => 함수형 업데이트를 활용한다. 화살표 함수로 전달함 여기에다가 인자로 데이터를 받아서
+  // 아이템을 추가한 데이터를 리턴하는 그런 콜백 함수를 이 set data함수에다가 전달 할것, 이렇게 상태 변화 함수,
+  //set state함수에 함수를 전달하는 것을 함수형 업데이트라고 표현하는데 이렇게 되면 dependency array를 비워도 항상 최슨의 state를 인자를 통해서 창고할 수 있게 되면서
+  //우리가 이 depth를 비울수 있게 된다.   setData((data) => [newItem, ...data])
+
+  const onCreate = useCallback((author, content, emotion) => {
     const created_date = new Date().getTime();
     const newItem = {
       author,
@@ -50,8 +61,8 @@ function App() {
     //데이터아이디 +1되어야함
     dataId.current += 1;
     //...data, newItem순으로 진행하면 원래데이터에 가장마지막에 이어붙인 효과 가능
-    setData([newItem, ...data]);
-  };
+    setData((data) => [newItem, ...data]);
+  }, []);
 
   const onRemove = (targetId) => {
     //해당 id값을 제외한 나머지를 새로운 배열만듬
