@@ -68,3 +68,17 @@ git pull
     그러니까 dispatch가 호출이 되면 상태별화가 일어나야하고, 그 상태 변화에 대한 처리는 이 reducer가 수행한다.
 
   - 그렇게 되면 reduce함수는 디스패치가 일어나면 처리하기 위해 호출 되는데, 첫번재 인자는 가장 최신의 state를 받고, 두번쨰는 디스패치를 호출할 때 전달해줬던 action객체(type:1)를 받게 된다.
+
+# Context API
+
+- 프롭스 드릴링 문제(부모->자식) 해결가능
+
+<사용방법>
+
+- Context 생성
+
+  - const MyContext = React.createContext(defaultvalue);
+
+- Context Provider를 통한 데이터 공급 / 아래와 같이 작성
+  - <MyContext.Provider value = { 전역으로 전달하고자하는 값 } > {/_이 Context안에 위치할 자식 컴포넌트들_/}</MyContext.Provider>
+- 값을 전달 받을수 있는 컴포넌트 수의 제한은 없고, 프로바이더의 컴포넌트 자식으로만 존재하면 모든 컴포넌트는 이 프로바이더가 전달하는 값을 사용할 수 있다.

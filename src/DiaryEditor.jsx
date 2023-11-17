@@ -1,6 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { DiaryDispatchContext } from "./App";
 
-const DiaryEditor = React.memo(({ onCreate }) => {
+const DiaryEditor = () => {
+  //함수 3개가 묶여 있는 객체기 때문에 비구조 할당으로 가져와야한다.
+  const { onCreate } = useContext(DiaryDispatchContext);
+
   useEffect(() => {
     console.log("DiaryEditor 렌더");
   });
@@ -78,8 +82,8 @@ const DiaryEditor = React.memo(({ onCreate }) => {
       </div>
     </div>
   );
-});
-export default DiaryEditor;
+};
+export default React.memo(DiaryEditor);
 
 // import React, { useEffect, useRef, useState } from "react";
 
